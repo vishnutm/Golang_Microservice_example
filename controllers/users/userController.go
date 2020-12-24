@@ -2,7 +2,9 @@ package users
 
 import (
 	"fmt"
+	"net/http"
 	"pack/domain/users"
+	"pack/utils/errors"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +15,14 @@ func CreateUser(c *gin.Context) {
 
 	if err := c.ShouldBind(&user); err != nil {
 		// Handle the Json error
-		fmt.Println(err)
+		resterror := errors.RestErr{
+			Message: "invalid json body",
+			Status:  http.StatusBadRequest,
+			Error:   "Bad request",
+		}
+		c.JSON(resterror.Status,resterror)
+
+		return
 
 	}
 	fmt.Println(user)
