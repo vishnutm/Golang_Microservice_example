@@ -6,5 +6,5 @@ type User struct {
 	FirstName   string `json:"firstname"`
 	LastName    string `json:"lastname"`
 	Email       string `json:"email"`
-	DataCreated string `json:"datacreated"`
+	DataCreated string `json:"datecreated"`
 }
