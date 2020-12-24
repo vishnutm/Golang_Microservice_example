@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"pack/domain/users"
+	"pack/services"
 	"pack/utils/errors"
 
 	"github.com/gin-gonic/gin"
@@ -20,11 +21,18 @@ func CreateUser(c *gin.Context) {
 			Status:  http.StatusBadRequest,
 			Error:   "Bad request",
 		}
-		c.JSON(resterror.Status,resterror)
+		c.JSON(resterror.Status, resterror)
 
 		return
 
 	}
+	result, saveErr := services.CreateUser(user)
+	if saveErr != nil {
+
+		c.JSON(saveErr.Status, saveErr)
+	}
+	c.JSON(http.StatusCreated, result)
+
 	fmt.Println(user)
 }
 
